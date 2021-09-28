@@ -38,7 +38,7 @@ const usersPut = async (req, res = response) => {
 
     //validar contra db
     if (password) {
-        const salt = bcryptjs.genSaltSync(10);
+        const salt = bcryptjs.genSaltSync();
         resto.password = bcryptjs.hashSync(password, salt);
     }
 
@@ -72,14 +72,19 @@ const usersPost = async (req, res = response) => {
 const usersDelete =  async (req, res = response) => {
     
     const {id}=req.params;
+    
+   // vino de validar
+    const uid=req.uid;
 
     //borrar fisicamente
     //const usuario= await Usuario.findByIdAndDelete(id);
 
-    const usuario= await  Usuario.findByIdAndUpdate(id, {estado:false});
-    
+    const usuario= await  Usuario.findByIdAndUpdate(id, {estado:false},{new:true});
+   // const usuarioAutenticado= req.usuario;
+
     res.json({
-        usuario
+        usuario,
+       // uid
     })
 }
 

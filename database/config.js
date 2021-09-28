@@ -8,10 +8,10 @@ const dbConnection = async () => {
             // useCreateIndex: true,
             // useFindAndModify: false
             
-        },
+        });
+      
         console.log('bd online')
-    );
-        
+      
     } catch (error) {
         console.log(error);
         throw new Error('error al levanatr la bd');
