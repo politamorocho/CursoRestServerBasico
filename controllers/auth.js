@@ -98,8 +98,8 @@ const googleSignIn = async (req, res=response)=>{
 
  } catch (error) {
     res.status(400).json({
-        ok: false,
-        msg: 'el token no se puede verificar'
+    
+        msg: 'Token de Google no es válido'
     })
 
      

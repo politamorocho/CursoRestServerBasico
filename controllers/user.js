@@ -62,7 +62,7 @@ const usersPost = async (req, res = response) => {
 
     //guardar db
     await usuario.save();
-
+    console.log(usuario);
 
     res.json({
         usuario

@@ -14,7 +14,8 @@
     <div id="g_id_onload"
     data-client_id="742894782168-q543h9ps3kcgp55kbfes808rre0j9emg.apps.googleusercontent.com"
     data-auto_prompt="false"
-    data-callback="handleCredentialResponse">
+    data-callback="handleCredentialResponse"
+    data-auto_select="true">
  </div>
  <div class="g_id_signin"
     data-type="standard"
@@ -29,7 +30,7 @@
 SIGN OUT
  </button>
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
 
     <script>
         function handleCredentialResponse(response) {
@@ -54,7 +55,7 @@ SIGN OUT
         }
 
         const button = document.getElementById('google_sign_out');
-         button.onclick=()=>{
+         button.onclick= async ()=>{
             console.log( google.accounts.id)
             google.accounts.id.disableAutoSelect()
             google.accounts.id.revoke(localStorage.getItem('email'), done=>{
@@ -65,6 +66,7 @@ SIGN OUT
 
 
        </script>
+       <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     
 </body>
