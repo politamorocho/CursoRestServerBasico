@@ -1,3 +1,4 @@
+
 const { response, request } = require('express');
 const bcryptjs = require('bcryptjs');
 
@@ -10,7 +11,7 @@ const usersGet = async (req = request, res = response) => {
     const { limite = 5, desde = 0 } = req.query;
 
     //query para extraer solo los que tienen estado true
-    const query={estado:true};
+    const query = { estado: true };
     // const usuarios = await Usuario.find(query)
     //     .skip(Number(desde))
     //     .limit(Number(limite));
@@ -26,7 +27,7 @@ const usersGet = async (req = request, res = response) => {
     res.json({
         total,
         usuarios
-        
+
     })
 }
 
@@ -49,42 +50,51 @@ const usersPut = async (req, res = response) => {
 
 const usersPost = async (req, res = response) => {
 
-    const { nombre, correo, password, rol } = req.body;
-    const usuario = new Usuario({ nombre, correo, password, rol });
 
-    //verificar correo
+    try {
+        const { nombre, correo, password, rol } = req.body;
+        const usuario = new Usuario({ nombre, correo, password, rol });
+
+        //verificar correo
+        //hash contraseña
+        // const salt = bcryptjs.genSaltSync(10);
+        // usuario.password = bcryptjs.hashSync(password, salt);
 
 
-    //hash contraseña
-    const salt = bcryptjs.genSaltSync(10);
-    usuario.password = bcryptjs.hashSync(password, salt);
+        //guardar db
+        await usuario.save();
+        console.log(usuario);
+
+        res.json({
+            usuario
+        });
+        
+    } catch (error) {
+
+        res.status(400).json({
+            msg: 'no se pudo, no señor'
+        })
+    }
 
 
-    //guardar db
-    await usuario.save();
-    console.log(usuario);
-
-    res.json({
-        usuario
-    });
 }
 
-const usersDelete =  async (req, res = response) => {
-    
-    const {id}=req.params;
-    
-   // vino de validar
-    const uid=req.uid;
+const usersDelete = async (req, res = response) => {
+
+    const { id } = req.params;
+
+    // vino de validar
+    const uid = req.uid;
 
     //borrar fisicamente
     //const usuario= await Usuario.findByIdAndDelete(id);
 
-    const usuario= await  Usuario.findByIdAndUpdate(id, {estado:false},{new:true});
-   // const usuarioAutenticado= req.usuario;
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false }, { new: true });
+    // const usuarioAutenticado= req.usuario;
 
     res.json({
         usuario,
-       // uid
+        // uid
     })
 }
 

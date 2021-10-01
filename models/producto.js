@@ -30,10 +30,11 @@ const ProductoSchema = Schema({
     },
     descripcion: { type: String },
 
-    descripcion: {
+    disponible: {
         type: String,
         default: true
-    }
+    },
+    img:{ type: String}
 
 })
 
